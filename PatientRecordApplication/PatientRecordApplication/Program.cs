@@ -223,6 +223,13 @@ namespace ConsoleChap17FileIOApp
         }
     }
 
+    class Patientclass
+    {
+        public string IDNumber { get; set; }
+        public string name { get; set; }
+        public double balanceOwed { get; set; }
+    }
+
     class Employee
     {
         public int EmpNum { get; set; }
