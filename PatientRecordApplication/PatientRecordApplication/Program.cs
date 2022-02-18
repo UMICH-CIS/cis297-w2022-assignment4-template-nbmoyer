@@ -15,13 +15,38 @@ namespace ConsoleChap17FileIOApp
     {
         static void Main(string[] args)
         {
-            FileOperations();
-            DirectoryOperations();
-            FileStreamOperations();
-            SequentialAccessWriteOperation();
-            ReadSequentialAccessOperation();
-            FindEmployees();
-            SerializableDemonstration();
+            string patientFile = "Patients.txt";
+
+            if(File.Exists(patientFile))
+            {
+
+            }
+            else
+            {
+                Console.WriteLine($"File {patientFile} does not exist already.");
+                Console.WriteLine("Creating file....");
+                FileStream fs = new FileStream(patientFile, FileMode.Create, FileAccess.Write);
+                StreamWriter writer = new StreamWriter(fs);
+                Patientclass test = new Patientclass("1234", "John", 10000);
+                writer.WriteLine(test);
+
+
+
+
+
+
+
+                fs.Close();
+            }
+
+
+            //FileOperations();
+            //DirectoryOperations();
+            //FileStreamOperations();
+            //SequentialAccessWriteOperation();
+            //ReadSequentialAccessOperation();
+            //FindEmployees();
+            //SerializableDemonstration();
 
         }
 
@@ -226,8 +251,16 @@ namespace ConsoleChap17FileIOApp
     class Patientclass
     {
         public string IDNumber { get; set; }
-        public string name { get; set; }
+        public string patientName { get; set; }
         public double balanceOwed { get; set; }
+
+        public Patientclass(string ID, string name, double balance)
+        {
+            IDNumber = ID;
+            patientName = name;
+            balanceOwed = balance;
+
+        }
     }
 
     class Employee
