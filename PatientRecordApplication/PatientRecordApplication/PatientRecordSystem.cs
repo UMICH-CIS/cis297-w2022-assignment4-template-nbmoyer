@@ -15,9 +15,9 @@ namespace ConsoleChap17FileIOApp
     {
         static void Main(string[] args)
         {
-            Patientclass test = new Patientclass("0000", "Default", 0);
-            string id = "5555";
+            Functions functions = new Functions();
 
+            //use of try, catch, finally block
             try
             {
                 bool wait = true;
@@ -38,24 +38,42 @@ namespace ConsoleChap17FileIOApp
                         switch (userInput)
                         {
                             case 1:
-                                test.writePatientData(id, test.patientName, test.balanceOwed);
+                                Console.Clear();
+                                Patientclass test = new Patientclass("0000", "Default", 0);
+                                Console.WriteLine("Patient ID?");
+                                string IDinput = Console.ReadLine();
+                                Console.WriteLine("Patient Name?");
+                                string NameInput = Console.ReadLine();
+                                Console.WriteLine("Patient balance due?");
+                                double balanceInput = int.Parse(Console.ReadLine());
+                                test.writePatientData(IDinput, NameInput, balanceInput);
                                 break;
                             case 2:
+                                ListPatientData listPatientData = new ListPatientData();
+                                Console.Clear();
+                                listPatientData.print();
                                 break;
                             case 3:
+                                SpecificPatient specificPatient = new SpecificPatient();
+                                Console.Clear();
+                                Console.Write("Patient ID?\n");
+                                int ID = int.Parse(Console.ReadLine());
+                                specificPatient.print(ID);
                                 break;
                             case 4:
+                                MinBalanceDue minBalanceDue = new MinBalanceDue();
+                                Console.Clear();
+                                Console.Write("Minimum balance due?\n");
+                                double balance = int.Parse(Console.ReadLine());
+                                minBalanceDue.print(balance);
+
                                 break;
                             case 5:
-                                //int input = int.Parse(Console.ReadLine());
-
-
                                 wait = false;
-
-                                //System.Environment.Exit(1);
                                 break;
                             default:
                                 Console.WriteLine("Invalid input");
+                                functions.inputWait();
 
                                 break;
                         }
@@ -64,6 +82,7 @@ namespace ConsoleChap17FileIOApp
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        functions.inputWait();
                     }
                     
                 }
@@ -72,8 +91,13 @@ namespace ConsoleChap17FileIOApp
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                functions.inputWait();
             }
-            
+            finally
+            {
+                Console.WriteLine("***Exiting applicaiton***");
+            }
+
 
 
 
@@ -89,27 +113,8 @@ namespace ConsoleChap17FileIOApp
 
             public void inputWait()
             {
-                try
-                {
-                    bool wait = true;
-                    do
-                    {
-                        Console.WriteLine("\nPress 1 to continue.");
-
-                        int input = int.Parse(Console.ReadLine());
-
-                        if (input == 1)
-                        {
-                            wait = false;
-                        }
-
-                    }
-                    while (wait);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+                Console.WriteLine("Press any key to continue.");
+                System.Console.ReadKey();
             }
         }
 
@@ -121,6 +126,7 @@ namespace ConsoleChap17FileIOApp
             public string IDNumber { get; set; }
             public string patientName { get; set; }
             public double balanceOwed { get; set; }
+            Functions functions = new Functions();
 
 
             public Patientclass(string ID, string name, double balance)
@@ -140,52 +146,29 @@ namespace ConsoleChap17FileIOApp
             public void writePatientData(string ID, string name, double balance)
             {
 
-                string patientFile = "Patients.txt";
-                //use of try catch example
-                try
+                string patientFile = @"Patients.txt";
+                //Open file if it exists. If not create a file
+                if (File.Exists(patientFile))
                 {
-
-                    if (File.Exists(patientFile))
-                    {
-                        Console.WriteLine($"File {patientFile} exists.");
-                        Console.WriteLine("Opening file....");
-                        FileStream fs = new FileStream(patientFile, FileMode.Open, FileAccess.Write);
-                        StreamWriter writer = new StreamWriter(fs);
-                        Console.Write("Writing input data to file");
-                        writer.WriteLine(ID);
-                        writer.WriteLine(name);
-                        writer.WriteLine(balance);
-
-                        
-
-                        fs.Close();
-                    }
-                    else
-                    {
-                        Console.WriteLine($"File {patientFile} does not exist already.");
-                        Console.WriteLine("Creating file....");
-                        FileStream fs = new FileStream(patientFile, FileMode.Create, FileAccess.Write);
-                        StreamWriter writer = new StreamWriter(fs);
-                        //writer.WriteLine(test);
-
-
-
-
-
-
-
-                        fs.Close();
-                    }
+                    Console.WriteLine($"File {patientFile} exists.");
+                    Console.WriteLine("Opening file....");
+                    StreamWriter writer = File.AppendText(patientFile);
+                    Console.Write("Writing input data to file....\n");
+                    writer.WriteLine($"{ID} {name} {balance}");
+                    writer.Close();
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine($"File {patientFile} does not exist already.");
+                    Console.WriteLine("Creating file....");
+                    FileStream fs = new FileStream(patientFile, FileMode.Create, FileAccess.Write);
+                    StreamWriter writer = new StreamWriter(fs);
+                    Console.Write("Writing input data to file....\n");
+                    writer.WriteLine($"{ID} {name} {balance}");
+                    writer.Close();
+                    fs.Close();
                 }
-
-                
-                Functions functions = new Functions();
                 functions.inputWait();
-
             }
         }
 
@@ -195,7 +178,19 @@ namespace ConsoleChap17FileIOApp
         /// </summary>
         class ListPatientData
         {
+            Functions functions = new Functions();
+            public void print()
+            {
+                Console.WriteLine("Patient data:");
 
+                string[] lines = System.IO.File.ReadAllLines(@"Patients.txt");
+
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+                functions.inputWait();
+            }
         }
 
         /// <summary>
@@ -204,6 +199,20 @@ namespace ConsoleChap17FileIOApp
         /// </summary>
         class SpecificPatient
         {
+            Functions functions = new Functions();
+            public void print(int id)
+            {
+                Console.WriteLine($"Patient {id}:");
+
+                string[] lines = System.IO.File.ReadAllLines(@"Patients.txt");
+                foreach(string line in lines)
+                {
+                    string[] words = lines.Split(' ');
+
+                }
+
+                functions.inputWait();
+            }
 
         }
 
@@ -214,7 +223,12 @@ namespace ConsoleChap17FileIOApp
         /// </summary>
         class MinBalanceDue
         {
+            Functions functions = new Functions();
+            public void print(double balance)
+            {
 
+                functions.inputWait();
+            }
         }
 
     }
