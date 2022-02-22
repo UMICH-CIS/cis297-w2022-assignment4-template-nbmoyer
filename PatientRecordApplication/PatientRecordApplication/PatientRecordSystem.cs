@@ -57,14 +57,14 @@ namespace ConsoleChap17FileIOApp
                                 SpecificPatient specificPatient = new SpecificPatient();
                                 Console.Clear();
                                 Console.Write("Patient ID?\n");
-                                int ID = int.Parse(Console.ReadLine());
+                                string ID = Console.ReadLine();
                                 specificPatient.print(ID);
                                 break;
                             case 4:
                                 MinBalanceDue minBalanceDue = new MinBalanceDue();
                                 Console.Clear();
                                 Console.Write("Minimum balance due?\n");
-                                double balance = int.Parse(Console.ReadLine());
+                                double balance = double.Parse(Console.ReadLine());
                                 minBalanceDue.print(balance);
 
                                 break;
@@ -184,10 +184,26 @@ namespace ConsoleChap17FileIOApp
                 Console.WriteLine("Patient data:");
 
                 string[] lines = System.IO.File.ReadAllLines(@"Patients.txt");
-
+                bool labels = false;
+                int i = 0;
                 foreach (string line in lines)
                 {
-                    Console.WriteLine(line);
+                    string[] words = lines[i].Split(' ');//parse each word of the current line
+
+                    if (labels == false)
+                    {
+                        Console.WriteLine("{0,-10}{1,-20}{2,-15}",
+                        "ID",
+                        "Name",
+                        "Balance due");
+                        labels = true;
+                    }
+
+                    Console.WriteLine("{0,-10}{1,-20}{2,-10}",
+                        words[0],
+                        words[1],
+                        String.Format("{0:C}", words[2]));
+                    i++;
                 }
                 functions.inputWait();
             }
@@ -200,15 +216,33 @@ namespace ConsoleChap17FileIOApp
         class SpecificPatient
         {
             Functions functions = new Functions();
-            public void print(int id)
+            public void print(string id)
             {
                 Console.WriteLine($"Patient {id}:");
 
                 string[] lines = System.IO.File.ReadAllLines(@"Patients.txt");
-                foreach(string line in lines)
+                int i = 0;
+                bool labels = false;
+                foreach (string line in lines)
                 {
-                    string[] words = lines.Split(' ');
+                    string[] words = lines[i].Split(' ');//parse each word of the current line
+                    if (words.Contains(id))//check if id is in this line. If so print it to the screen.
+                    {
+                        if (labels == false)
+                        {
+                            Console.WriteLine("{0,-10}{1,-20}{2,-15}",
+                            "ID",
+                            "Name",
+                            "Balance due");
+                            labels = true;
+                        }
 
+                        Console.WriteLine("{0,-10}{1,-20}{2,-10}",
+                            words[0],
+                            words[1],
+                            String.Format("{0:C}", words[2]));
+                    }
+                    i++;
                 }
 
                 functions.inputWait();
@@ -226,7 +260,33 @@ namespace ConsoleChap17FileIOApp
             Functions functions = new Functions();
             public void print(double balance)
             {
+                string[] lines = System.IO.File.ReadAllLines(@"Patients.txt");
 
+                string printBalance = balance.ToString("C0");
+                Console.WriteLine($"Patients with balance due greater than or equal to {printBalance}");
+                int i = 0;
+                bool labels = false;
+                foreach (string line in lines)
+                {
+                    string[] words = lines[i].Split(' ');//parse each word of the current line
+                    if (Convert.ToDouble(words[2]) >= balance)//check if id is in this line. If so print it to the screen.
+                    {
+                        if(labels == false)
+                        {
+                            Console.WriteLine("{0,-10}{1,-20}{2,-15}",
+                            "ID",
+                            "Name",
+                            "Balance due");
+                            labels = true;
+                        }
+                        
+                        Console.WriteLine("{0,-10}{1,-20}{2,-10}", 
+                            words[0],
+                            words[1],
+                            printBalance);
+                    }
+                    i++;
+                }
                 functions.inputWait();
             }
         }
