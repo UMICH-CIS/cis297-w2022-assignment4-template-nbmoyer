@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ConsoleChap17FileIOApp.Functions">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Functions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleChap17FileIOApp.ListPatientData">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ListPatientData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleChap17FileIOApp.MinBalanceDue">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MinBalanceDue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleChap17FileIOApp.Patientclass">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAQCAAAgAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Patientclass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleChap17FileIOApp.PatientRecordSystem">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>PatientRecordSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleChap17FileIOApp.SpecificPatient">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SpecificPatient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
