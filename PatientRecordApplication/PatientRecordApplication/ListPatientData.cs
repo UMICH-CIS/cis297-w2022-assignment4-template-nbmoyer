@@ -36,7 +36,7 @@ namespace ConsoleChap17FileIOApp
                 Console.WriteLine("{0,-10}{1,-20}{2,-10}",
                     words[0],
                     words[1],
-                    String.Format("{0:C}", words[2]));
+                    $"{ words[2]:C}");
                 i++;
             }
             functions.inputWait();

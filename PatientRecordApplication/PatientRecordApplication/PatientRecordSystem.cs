@@ -32,7 +32,7 @@ namespace ConsoleChap17FileIOApp
                     Console.WriteLine("3: Display specific patient data");
                     Console.WriteLine("4: List patients with specified minimum balance due");
                     Console.WriteLine("5: Exit");
-
+                    //try catch
                     try
                     {
                         int userInput = int.Parse(Console.ReadLine());
@@ -43,10 +43,22 @@ namespace ConsoleChap17FileIOApp
                                 Patientclass test = new Patientclass("0000", "Default", 0);
                                 Console.WriteLine("Patient ID?");
                                 string IDinput = Console.ReadLine();
+                                
                                 Console.WriteLine("Patient Name?");
                                 string NameInput = Console.ReadLine();
+
                                 Console.WriteLine("Patient balance due?");
-                                double balanceInput = int.Parse(Console.ReadLine());
+                                double balanceInput = 0;
+                                //format exception
+                                try
+                                {
+                                    balanceInput = int.Parse(Console.ReadLine());
+                                }
+                                catch (FormatException)
+                                {
+                                    Console.WriteLine("{0} is not a double");
+                                }
+                                
                                 test.writePatientData(IDinput, NameInput, balanceInput);
                                 break;
                             case 2:
@@ -66,7 +78,24 @@ namespace ConsoleChap17FileIOApp
                                 Console.Clear();
                                 Console.Write("Minimum balance due?\n");
                                 double balance = double.Parse(Console.ReadLine());
-                                minBalanceDue.print(balance);
+                                //user defined exception
+                                try
+                                {
+                                    if (balance >= 0)
+                                    {
+                                        minBalanceDue.print(balance);
+                                    }
+                                    else
+                                    {
+                                        throw (new Exception("Balance must be greater than or equal to 0"));
+                                    }
+                                }
+                                catch(Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message.ToString());
+                                    functions.inputWait();
+                                    break;
+                                }
 
                                 break;
                             case 5:
